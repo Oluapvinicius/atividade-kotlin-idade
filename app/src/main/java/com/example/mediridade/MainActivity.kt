@@ -2,10 +2,13 @@ package com.example.mediridade
 
 import android.R
 import android.os.Bundle
+import android.os.Message
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,10 +29,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalOf
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,8 +58,27 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+
 @Composable
 fun MedirIdade( modifier: Modifier = Modifier) {
+    var numero by remember { mutableStateOf(0) }
+
+    var medirIdade =
+        if (numero >= 18) {
+            "Maior"
+        } else {
+            "Menor"
+        }
+
+    var validarIdade =
+        if (numero < 0)
+        {numero = 0
+        }else if (numero > 180){
+            numero = 180
+        }else{
+            numero
+        }
 
 
 
@@ -81,13 +108,33 @@ fun MedirIdade( modifier: Modifier = Modifier) {
         }
 Column(modifier = Modifier
     .fillMaxWidth()
-    .height(132.dp),
+    .height(172.dp),
     ) {
+    Spacer(modifier = Modifier.height(20.dp))
+    Box(modifier = Modifier
+        .fillMaxWidth()
 
+    ){
+    Text(
+        modifier= Modifier
+
+            .align (Alignment.Center)
+           ,
+        text = "$validarIdade", fontSize = 30.sp
+    )
+    }
+    Spacer(modifier = Modifier.height(20.dp))
         Row(modifier = Modifier
+            .fillMaxWidth(),
+
+            horizontalArrangement = Arrangement.Center
+
            )
+
         {
-        Button(onClick = {},
+
+
+        Button(onClick = { numero--},
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Blue
@@ -103,7 +150,7 @@ Column(modifier = Modifier
                 contentDescription = "Star")
         }
 
-            Button(onClick = {},
+            Button(onClick = {numero++},
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Blue
@@ -122,6 +169,15 @@ Column(modifier = Modifier
 
         }
 }
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                modifier = Modifier.align (Alignment.Center),
+                text = "Voce é $medirIdade de idade",
+                fontSize = 30.sp,
+                color = Color.Blue
+
+            )
+        }
     }
 }
 
